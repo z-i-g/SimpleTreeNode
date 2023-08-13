@@ -83,7 +83,10 @@ class SimpleTree<T>
 
     public int LeafCount()
     {
-        return (int) getAllNodes(Root).stream().filter(node -> node.Children == null).count();
+        return (int) getAllNodes(Root)
+                .stream()
+                .filter(node -> node.Children == null || node.Children.isEmpty())
+                .count();
         // количество листьев в дереве
     }
 

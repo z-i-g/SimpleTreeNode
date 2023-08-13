@@ -190,8 +190,10 @@ class SimpleTreeTest {
         simpleTree.AddChild(childNode, childNodeSecond);
         simpleTree.AddChild(childNode, childNodeThird);
         simpleTree.AddChild(childNodeSecond, childNodeFourth);
-
         assertEquals(2, simpleTree.LeafCount());
+
+        simpleTree.DeleteNode(childNode);
+        assertEquals(1, simpleTree.LeafCount());
     }
 
     @Test
