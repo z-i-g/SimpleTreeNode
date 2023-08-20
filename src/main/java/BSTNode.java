@@ -1,7 +1,3 @@
-import java.io.*;
-import java.util.*;
-
-
 class BSTNode<T>
 {
     public int NodeKey; // ключ узла
@@ -52,13 +48,13 @@ class BST<T>
         if (Root == null)
             return bstFind;
 
-        BSTNode<T> fundNode = findNode(Root, key);
-        bstFind.Node = fundNode;
+        BSTNode<T> foundNode = findNode(Root, key);
+        bstFind.Node = foundNode;
 
-        if (fundNode.NodeKey == key)
+        if (foundNode.NodeKey == key)
             bstFind.NodeHasKey = true;
 
-        if (fundNode.NodeKey > key)
+        if (foundNode.NodeKey > key)
             bstFind.ToLeft = true;
 
         // ищем в дереве узел и сопутствующую информацию по ключу
@@ -85,6 +81,12 @@ class BST<T>
     public boolean AddKeyValue(int key, T val)
     {
         BSTFind<T> bstFind = FindNodeByKey(key);
+
+        if (bstFind.Node == null) {
+            Root = new BSTNode<>(key, val, null);
+            return true;
+        }
+
         if (bstFind.NodeHasKey)
             return false;
 
@@ -95,6 +97,7 @@ class BST<T>
         }
 
         bstFind.Node.RightChild = new BSTNode<>(key, val, bstFind.Node);
+
         size++;
         return true;
         // добавляем ключ-значение в дерево
@@ -113,41 +116,75 @@ class BST<T>
 
     public boolean DeleteNodeByKey(int key)
     {
-        BSTFind<T> fundNode = FindNodeByKey(key);
-        if (!fundNode.NodeHasKey)
+        BSTFind<T> deletedNode = FindNodeByKey(key);
+        if (!deletedNode.NodeHasKey)
             return false;
 
-        if (fundNode.Node.RightChild == null) {
-            fundNode.Node = fundNode.Node.LeftChild;
-            size--;
-            return true;
-        }
+        if (deletedNode.Node.RightChild == null && deletedNode.Node.LeftChild == null)
+            return deleteSheet(deletedNode.Node, deletedNode.Node.Parent);
 
-        BSTNode<T> minNode = FinMinMax(fundNode.Node.RightChild, false);
+        if (deletedNode.Node.RightChild == null)
+            return deleteLeftChild(deletedNode.Node);
 
-        if (minNode.RightChild == null && minNode.LeftChild == null) {
-            minNode.LeftChild = fundNode.Node.LeftChild;
-            minNode.RightChild = fundNode.Node.RightChild;
-            fundNode.Node = minNode;
-            size--;
-            return true;
-        }
+        if (deletedNode.Node.LeftChild == null)
+            return deleteRightChild(deletedNode.Node);
 
-        if (minNode.RightChild != null) {
-            minNode = minNode.RightChild;
+        return deleteNodeWithTwoHeirs(deletedNode.Node);
+    }
 
-            BSTNode<T> fr = fundNode.Node.RightChild;
-            BSTNode<T> fl = fundNode.Node.LeftChild;
+    private boolean deleteLeftChild(BSTNode<T> deletedNode) {
+        deletedNode.Parent.LeftChild = deletedNode.LeftChild;
+        deletedNode.LeftChild.Parent = deletedNode.Parent;
+        size--;
+        return true;
+    }
 
-            fundNode.Node = minNode;
-            fundNode.Node.RightChild = fr;
-            fundNode.Node.LeftChild = fl;
-            size--;
-            return true;
-        }
+    private boolean deleteRightChild(BSTNode<T> deletedNode) {
+        deletedNode.Parent.RightChild = deletedNode.RightChild;
+        deletedNode.RightChild.Parent = deletedNode.Parent;
+        size--;
+        return true;
+    }
 
-        // удаляем узел по ключу
-        return false; // если узел не найден
+    private boolean deleteNodeWithTwoHeirs(BSTNode<T> deletedNode) {
+        BSTNode<T> minNode = FinMinMax(deletedNode.RightChild, false);
+
+        if (minNode.LeftChild == null && minNode.RightChild == null)
+          return deleteSheet(deletedNode, minNode);
+
+        if (deletedNode.Parent.NodeKey < minNode.NodeKey)
+            deletedNode.Parent.RightChild = minNode;
+
+        if (deletedNode.Parent.NodeKey > minNode.NodeKey)
+            deletedNode.Parent.LeftChild = minNode;
+
+        if (minNode.Parent.NodeKey < minNode.RightChild.NodeKey)
+            minNode.Parent.RightChild = minNode.RightChild;
+
+        if (minNode.Parent.NodeKey > minNode.RightChild.NodeKey)
+            minNode.Parent.LeftChild = minNode.RightChild;
+
+        minNode.RightChild.Parent = minNode.Parent;
+        minNode.LeftChild = deletedNode.LeftChild;
+        minNode.RightChild = deletedNode.RightChild;
+        deletedNode.LeftChild.Parent = minNode;
+        deletedNode.RightChild.Parent = minNode;
+        minNode.Parent = deletedNode.Parent;
+        size--;
+        return true;
+    }
+
+    private boolean deleteSheet(BSTNode<T> deletedNode, BSTNode<T> successorNode) {
+        if (deletedNode.Parent.NodeKey < successorNode.NodeKey)
+            deletedNode.Parent.RightChild = successorNode;
+        if (deletedNode.Parent.NodeKey > successorNode.NodeKey)
+            deletedNode.Parent.LeftChild = successorNode;
+
+        successorNode.Parent = deletedNode.Parent;
+        successorNode.LeftChild = deletedNode.LeftChild;
+        successorNode.RightChild = deletedNode.RightChild;
+        size--;
+        return true;
     }
 
     public int Count()
