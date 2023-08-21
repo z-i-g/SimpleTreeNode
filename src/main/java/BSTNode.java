@@ -34,12 +34,10 @@ class BSTFind<T>
 class BST<T>
 {
     BSTNode<T> Root; // корень дерева, или null
-    private int size = 0;
 
     public BST(BSTNode<T> node)
     {
         Root = node;
-        size++;
     }
 
     public BSTFind<T> FindNodeByKey(int key)
@@ -83,7 +81,6 @@ class BST<T>
 
         if (bstFind.Node == null) {
             Root = new BSTNode<>(key, val, null);
-            size++;
             return true;
         }
 
@@ -92,13 +89,10 @@ class BST<T>
 
         if (bstFind.ToLeft) {
             bstFind.Node.LeftChild = new BSTNode<>(key, val, bstFind.Node);
-            size++;
             return true;
         }
 
         bstFind.Node.RightChild = new BSTNode<>(key, val, bstFind.Node);
-
-        size++;
         return true;
         // добавляем ключ-значение в дерево
     }
@@ -135,14 +129,12 @@ class BST<T>
     private boolean deleteLeftChild(BSTNode<T> deletedNode) {
         deletedNode.Parent.LeftChild = deletedNode.LeftChild;
         deletedNode.LeftChild.Parent = deletedNode.Parent;
-        size--;
         return true;
     }
 
     private boolean deleteRightChild(BSTNode<T> deletedNode) {
         deletedNode.Parent.RightChild = deletedNode.RightChild;
         deletedNode.RightChild.Parent = deletedNode.Parent;
-        size--;
         return true;
     }
 
@@ -170,14 +162,12 @@ class BST<T>
         deletedNode.LeftChild.Parent = minNode;
         deletedNode.RightChild.Parent = minNode;
         minNode.Parent = deletedNode.Parent;
-        size--;
         return true;
     }
 
     private boolean deleteSheet(BSTNode<T> deletedNode, BSTNode<T> successorNode) {
         if (deletedNode == Root) {
             Root = null;
-            size--;
             return true;
         }
         if (deletedNode.Parent.NodeKey < successorNode.NodeKey)
@@ -188,12 +178,23 @@ class BST<T>
         successorNode.Parent = deletedNode.Parent;
         successorNode.LeftChild = deletedNode.LeftChild;
         successorNode.RightChild = deletedNode.RightChild;
-        size--;
         return true;
     }
 
     public int Count()
     {
-        return size; // количество узлов в дереве
+        if (Root != null) {
+            return countRecursively(Root, 1);
+        }
+        return 0; // количество узлов в дереве
+    }
+
+    private int countRecursively(BSTNode<T> currentNode, int iterateSize) {
+        if (currentNode.RightChild != null)
+            iterateSize = 1 + countRecursively(currentNode.RightChild, iterateSize);
+
+        if (currentNode.LeftChild != null)
+            iterateSize =  1 + countRecursively(currentNode.LeftChild, iterateSize);
+        return iterateSize;
     }
 }
