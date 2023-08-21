@@ -175,6 +175,11 @@ class BST<T>
     }
 
     private boolean deleteSheet(BSTNode<T> deletedNode, BSTNode<T> successorNode) {
+        if (deletedNode == Root) {
+            Root = null;
+            size--;
+            return true;
+        }
         if (deletedNode.Parent.NodeKey < successorNode.NodeKey)
             deletedNode.Parent.RightChild = successorNode;
         if (deletedNode.Parent.NodeKey > successorNode.NodeKey)

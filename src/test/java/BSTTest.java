@@ -228,6 +228,15 @@ class BSTTest {
     }
 
     @Test
+    public void deleteLastNode() {
+        assertEquals(1, bst.Count());
+        assertTrue(bst.FindNodeByKey(4).NodeHasKey);
+        assertTrue(bst.DeleteNodeByKey(4));
+        assertEquals(0, bst.Count());
+        assertNull(bst.Root);
+    }
+
+    @Test
     public void countTest() {
         assertEquals(1, bst.Count());
 
