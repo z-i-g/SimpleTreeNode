@@ -75,7 +75,6 @@ class BST<T>
             return findNode(currentNode.RightChild, key);
 
         return currentNode;
-
     }
 
     public boolean AddKeyValue(int key, T val)
@@ -84,6 +83,7 @@ class BST<T>
 
         if (bstFind.Node == null) {
             Root = new BSTNode<>(key, val, null);
+            size++;
             return true;
         }
 
@@ -196,5 +196,4 @@ class BST<T>
     {
         return size; // количество узлов в дереве
     }
-
 }

@@ -251,4 +251,21 @@ class BSTTest {
 
         assertEquals(9, bst.Count());
     }
+    @Test
+    public void countTestWhenDeleteLastNode() {
+        assertEquals(1, bst.Count());
+
+        bst.DeleteNodeByKey(4);
+        assertEquals(0, bst.Count());
+    }
+
+
+    @Test
+    public void countTestWhenAddNodeToEmptyBst() {
+        assertEquals(1, bst.Count());
+
+        bst.DeleteNodeByKey(4);
+        bst.AddKeyValue(3, 33);
+        assertEquals(1, bst.Count());
+    }
 }
