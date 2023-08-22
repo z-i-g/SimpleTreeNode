@@ -115,7 +115,7 @@ class BST<T>
             return false;
 
         if (deletedNode.Node.RightChild == null && deletedNode.Node.LeftChild == null)
-            return deleteSheet(deletedNode.Node, deletedNode.Node.Parent);
+            return deleteSheet(deletedNode.Node);
 
         if (deletedNode.Node.RightChild == null)
             return deleteLeftChild(deletedNode.Node);
@@ -142,7 +142,7 @@ class BST<T>
         BSTNode<T> minNode = FinMinMax(deletedNode.RightChild, false);
 
         if (minNode.LeftChild == null && minNode.RightChild == null)
-          return deleteSheet(deletedNode, minNode);
+          return deleteSheetAndReplace(deletedNode, minNode);
 
         if (deletedNode.Parent.NodeKey < minNode.NodeKey)
             deletedNode.Parent.RightChild = minNode;
@@ -165,7 +165,19 @@ class BST<T>
         return true;
     }
 
-    private boolean deleteSheet(BSTNode<T> deletedNode, BSTNode<T> successorNode) {
+    private boolean deleteSheet(BSTNode<T> deletedNode) {
+        if (deletedNode == Root) {
+            Root = null;
+            return true;
+        }
+        if (deletedNode.Parent.NodeKey < deletedNode.NodeKey)
+            deletedNode.Parent.RightChild = null;
+        if (deletedNode.Parent.NodeKey > deletedNode.NodeKey)
+            deletedNode.Parent.LeftChild = null;
+        return true;
+    }
+
+    private boolean deleteSheetAndReplace(BSTNode<T> deletedNode, BSTNode<T> successorNode) {
         if (deletedNode == Root) {
             Root = null;
             return true;
@@ -175,9 +187,17 @@ class BST<T>
         if (deletedNode.Parent.NodeKey > successorNode.NodeKey)
             deletedNode.Parent.LeftChild = successorNode;
 
+        if (successorNode.Parent.NodeKey < successorNode.NodeKey)
+            successorNode.Parent.RightChild = null;
+        if (successorNode.Parent.NodeKey > successorNode.NodeKey)
+            successorNode.Parent.LeftChild = null;
+
+
         successorNode.Parent = deletedNode.Parent;
         successorNode.LeftChild = deletedNode.LeftChild;
         successorNode.RightChild = deletedNode.RightChild;
+        successorNode.LeftChild.Parent = successorNode;
+        successorNode.RightChild.Parent = successorNode;
         return true;
     }
 

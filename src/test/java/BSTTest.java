@@ -139,7 +139,9 @@ class BSTTest {
         bst.AddKeyValue(1, 11);
 
         assertEquals(3, bst.Count());
+        assertTrue(bst.FindNodeByKey(1).NodeHasKey);
         assertTrue(bst.DeleteNodeByKey(1));
+        assertFalse(bst.FindNodeByKey(1).NodeHasKey);
         assertEquals(3, rootNode.LeftChild.NodeKey);
         assertNull(rootNode.LeftChild.LeftChild);
         assertNull(rootNode.LeftChild.RightChild);
@@ -197,10 +199,12 @@ class BSTTest {
         assertFalse(bst.FindNodeByKey(10).NodeHasKey);
         assertEquals(11, rootNode.RightChild.NodeKey);
         assertEquals(6, rootNode.RightChild.LeftChild.NodeKey);
+        assertEquals(11, rootNode.RightChild.LeftChild.Parent.NodeKey);
 
         assertEquals(15, rootNode.RightChild.RightChild.NodeKey);
         assertEquals(13, rootNode.RightChild.RightChild.LeftChild.NodeKey);
         assertEquals(14, rootNode.RightChild.RightChild.LeftChild.RightChild.NodeKey);
+        assertNull(rootNode.RightChild.RightChild.LeftChild.LeftChild);
         assertEquals(17, rootNode.RightChild.RightChild.RightChild.NodeKey);
     }
 
@@ -214,15 +218,21 @@ class BSTTest {
         bst.AddKeyValue(7, 77);
         bst.AddKeyValue(10, 100);
         bst.AddKeyValue(9, 99);
+
         assertEquals(9, bst.Count());
         assertTrue(bst.FindNodeByKey(6).NodeHasKey);
         assertTrue(bst.DeleteNodeByKey(6));
         assertEquals(8, bst.Count());
         assertFalse(bst.FindNodeByKey(6).NodeHasKey);
         assertEquals(7, rootNode.RightChild.NodeKey);
+        assertEquals(4, rootNode.RightChild.Parent.NodeKey);
         assertEquals(5, rootNode.RightChild.LeftChild.NodeKey);
+        assertEquals(7, rootNode.RightChild.LeftChild.Parent.NodeKey);
         assertEquals(10, rootNode.RightChild.RightChild.NodeKey);
+        assertEquals(7, rootNode.RightChild.RightChild.Parent.NodeKey);
         assertEquals(9, rootNode.RightChild.RightChild.LeftChild.NodeKey);
+        assertEquals(10, rootNode.RightChild.RightChild.LeftChild.Parent.NodeKey);
+        assertNull(rootNode.RightChild.RightChild.RightChild);
         assertNull(rootNode.RightChild.RightChild.LeftChild.LeftChild);
         assertNull(rootNode.RightChild.RightChild.LeftChild.RightChild);
     }
