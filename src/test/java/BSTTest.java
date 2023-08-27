@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BSTTest {
@@ -278,4 +280,184 @@ class BSTTest {
         bst.AddKeyValue(3, 33);
         assertEquals(1, bst.Count());
     }
+
+    @Test
+    public void wideAllNodesTestThenBstIsEmpty() {
+        bst.DeleteNodeByKey(4);
+        ArrayList<BSTNode> nodes = bst.WideAllNodes();
+
+        assertEquals(0, bst.Count());
+        assertEquals(0, nodes.size());
+    }
+
+    @Test
+    public void wideAllNodesTestThenBstContainsOnlyRootNode() {
+        ArrayList<BSTNode> nodes = bst.WideAllNodes();
+
+        assertEquals(4, nodes.get(0).NodeKey);
+        assertEquals(1, bst.Count());
+        assertEquals(1, nodes.size());
+    }
+
+
+    @Test
+    public void wideAllNodesTestThenBstContainsSomeNodes() {
+        bst.AddKeyValue(3, 33);
+        bst.AddKeyValue(1, 11);
+        bst.AddKeyValue(2, 22);
+        bst.AddKeyValue(6, 66);
+        bst.AddKeyValue(5, 55);
+        bst.AddKeyValue(7, 77);
+        bst.AddKeyValue(10, 100);
+        bst.AddKeyValue(9, 99);
+
+        ArrayList<BSTNode> nodes = bst.WideAllNodes();
+
+        assertEquals(4, nodes.get(0).NodeKey);
+        assertEquals(3, nodes.get(1).NodeKey);
+        assertEquals(6, nodes.get(2).NodeKey);
+        assertEquals(1, nodes.get(3).NodeKey);
+        assertEquals(5, nodes.get(4).NodeKey);
+        assertEquals(7, nodes.get(5).NodeKey);
+        assertEquals(2, nodes.get(6).NodeKey);
+        assertEquals(10, nodes.get(7).NodeKey);
+        assertEquals(9, nodes.get(8).NodeKey);
+        assertEquals(9, bst.Count());
+        assertEquals(9, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesInOrderTestThenBstIsEmpty() {
+        bst.DeleteNodeByKey(4);
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(0);
+
+        assertEquals(0, bst.Count());
+        assertEquals(0, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesInOrderTestThenBstContainsOnlyRootNode() {
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(0);
+
+        assertEquals(4, nodes.get(0).NodeKey);
+        assertEquals(1, bst.Count());
+        assertEquals(1, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesInOrderTestThenBstContainsSomeNodes() {
+        bst.AddKeyValue(3, 33);
+        bst.AddKeyValue(1, 11);
+        bst.AddKeyValue(2, 22);
+        bst.AddKeyValue(6, 66);
+        bst.AddKeyValue(5, 55);
+        bst.AddKeyValue(7, 77);
+        bst.AddKeyValue(10, 100);
+        bst.AddKeyValue(9, 99);
+
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(0);
+
+        assertEquals(1, nodes.get(0).NodeKey);
+        assertEquals(2, nodes.get(1).NodeKey);
+        assertEquals(3, nodes.get(2).NodeKey);
+        assertEquals(4, nodes.get(3).NodeKey);
+        assertEquals(5, nodes.get(4).NodeKey);
+        assertEquals(6, nodes.get(5).NodeKey);
+        assertEquals(7, nodes.get(6).NodeKey);
+        assertEquals(9, nodes.get(7).NodeKey);
+        assertEquals(10, nodes.get(8).NodeKey);
+        assertEquals(9, bst.Count());
+        assertEquals(9, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesPostOrderTestThenBstIsEmpty() {
+        bst.DeleteNodeByKey(4);
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(1);
+
+        assertEquals(0, bst.Count());
+        assertEquals(0, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesPostOrderTestThenBstContainsOnlyRootNode() {
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(1);
+
+        assertEquals(4, nodes.get(0).NodeKey);
+        assertEquals(1, bst.Count());
+        assertEquals(1, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesPostOrderTestThenBstContainsSomeNodes() {
+        bst.AddKeyValue(3, 33);
+        bst.AddKeyValue(1, 11);
+        bst.AddKeyValue(2, 22);
+        bst.AddKeyValue(6, 66);
+        bst.AddKeyValue(5, 55);
+        bst.AddKeyValue(7, 77);
+        bst.AddKeyValue(10, 100);
+        bst.AddKeyValue(9, 99);
+
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(1);
+
+        assertEquals(2, nodes.get(0).NodeKey);
+        assertEquals(1, nodes.get(1).NodeKey);
+        assertEquals(3, nodes.get(2).NodeKey);
+        assertEquals(5, nodes.get(3).NodeKey);
+        assertEquals(9, nodes.get(4).NodeKey);
+        assertEquals(10, nodes.get(5).NodeKey);
+        assertEquals(7, nodes.get(6).NodeKey);
+        assertEquals(6, nodes.get(7).NodeKey);
+        assertEquals(4, nodes.get(8).NodeKey);
+        assertEquals(9, bst.Count());
+        assertEquals(9, nodes.size());
+    }
+
+
+
+    @Test
+    public void deepAllNodesPreOrderTestThenBstIsEmpty() {
+        bst.DeleteNodeByKey(4);
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(2);
+
+        assertEquals(0, bst.Count());
+        assertEquals(0, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesPreOrderTestThenBstContainsOnlyRootNode() {
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(2);
+
+        assertEquals(4, nodes.get(0).NodeKey);
+        assertEquals(1, bst.Count());
+        assertEquals(1, nodes.size());
+    }
+
+    @Test
+    public void deepAllNodesPreOrderTestThenBstContainsSomeNodes() {
+        bst.AddKeyValue(3, 33);
+        bst.AddKeyValue(1, 11);
+        bst.AddKeyValue(2, 22);
+        bst.AddKeyValue(6, 66);
+        bst.AddKeyValue(5, 55);
+        bst.AddKeyValue(7, 77);
+        bst.AddKeyValue(10, 100);
+        bst.AddKeyValue(9, 99);
+
+        ArrayList<BSTNode> nodes = bst.DeepAllNodes(2);
+
+        assertEquals(4, nodes.get(0).NodeKey);
+        assertEquals(3, nodes.get(1).NodeKey);
+        assertEquals(1, nodes.get(2).NodeKey);
+        assertEquals(2, nodes.get(3).NodeKey);
+        assertEquals(6, nodes.get(4).NodeKey);
+        assertEquals(5, nodes.get(5).NodeKey);
+        assertEquals(7, nodes.get(6).NodeKey);
+        assertEquals(10, nodes.get(7).NodeKey);
+        assertEquals(9, nodes.get(8).NodeKey);
+        assertEquals(9, bst.Count());
+        assertEquals(9, nodes.size());
+    }
+
 }

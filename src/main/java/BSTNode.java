@@ -126,6 +126,85 @@ class BST<T>
         return deleteNodeWithTwoHeirs(deletedNode.Node);
     }
 
+    public ArrayList<BSTNode> WideAllNodes() {
+        ArrayList<BSTNode> nodes = new ArrayList<>();
+        if (Root == null)
+            return nodes;
+        nodes.add(Root);
+        return WideAllNodesRecursively(nodes);
+    }
+
+    private ArrayList<BSTNode> WideAllNodesRecursively(ArrayList<BSTNode> iterateWideNodes) {
+        ArrayList<BSTNode> result = new ArrayList();
+
+        for (BSTNode node : iterateWideNodes) {
+            if (node.LeftChild != null)
+                result.add(node.LeftChild);
+
+            if (node.RightChild != null)
+                result.add(node.RightChild);
+        }
+
+        if (result.isEmpty())
+            return iterateWideNodes;
+
+        iterateWideNodes.addAll(WideAllNodesRecursively(result));
+        return iterateWideNodes;
+    }
+
+    public ArrayList<BSTNode> DeepAllNodes(int orderType) {
+        ArrayList<BSTNode> nodes = new ArrayList<>();
+        if (Root == null)
+            return nodes;
+
+        if (orderType == 0)
+            return DeepAllNodesRecursivelyInOrder(nodes, Root);
+
+        if (orderType == 1)
+            return DeepAllNodesRecursivelyPostOrder(nodes, Root);
+
+        if (orderType == 2)
+            return DeepAllNodesRecursivelyPreOrder(nodes, Root);
+
+        return nodes;
+    }
+
+    private ArrayList<BSTNode> DeepAllNodesRecursivelyInOrder(ArrayList<BSTNode> nodes, BSTNode currentNode) {
+        if (currentNode.LeftChild != null)
+            DeepAllNodesRecursivelyInOrder(nodes, currentNode.LeftChild);
+
+        nodes.add(currentNode);
+
+        if (currentNode.RightChild != null)
+            DeepAllNodesRecursivelyInOrder(nodes, currentNode.RightChild);
+
+        return nodes;
+    }
+
+    private ArrayList<BSTNode> DeepAllNodesRecursivelyPostOrder(ArrayList<BSTNode> nodes, BSTNode currentNode) {
+        if (currentNode.LeftChild != null)
+            DeepAllNodesRecursivelyPostOrder(nodes, currentNode.LeftChild);
+
+        if (currentNode.RightChild != null)
+            DeepAllNodesRecursivelyPostOrder(nodes, currentNode.RightChild);
+
+        nodes.add(currentNode);
+
+        return nodes;
+    }
+
+    private ArrayList<BSTNode> DeepAllNodesRecursivelyPreOrder(ArrayList<BSTNode> nodes, BSTNode currentNode) {
+        nodes.add(currentNode);
+
+        if (currentNode.LeftChild != null)
+            DeepAllNodesRecursivelyPreOrder(nodes, currentNode.LeftChild);
+
+        if (currentNode.RightChild != null)
+            DeepAllNodesRecursivelyPreOrder(nodes, currentNode.RightChild);
+
+        return nodes;
+    }
+
     private boolean deleteLeftChild(BSTNode<T> deletedNode) {
         deletedNode.Parent.LeftChild = deletedNode.LeftChild;
         deletedNode.LeftChild.Parent = deletedNode.Parent;
