@@ -11,21 +11,37 @@ class BSTNodeTest {
         balancedBST.GenerateTree(arr);
 
         assertEquals(8, balancedBST.Root.NodeKey);
-        assertEquals(4, balancedBST.Root.LeftChild.NodeKey);
-        assertEquals(12, balancedBST.Root.RightChild.NodeKey);
-        assertEquals(2, balancedBST.Root.LeftChild.LeftChild.NodeKey);
-        assertEquals(6, balancedBST.Root.LeftChild.RightChild.NodeKey);
-        assertEquals(10, balancedBST.Root.RightChild.LeftChild.NodeKey);
-        assertEquals(14, balancedBST.Root.RightChild.RightChild.NodeKey);
-        assertEquals(1, balancedBST.Root.LeftChild.LeftChild.LeftChild.NodeKey);
-        assertEquals(3, balancedBST.Root.LeftChild.LeftChild.RightChild.NodeKey);
-        assertEquals(5, balancedBST.Root.LeftChild.RightChild.LeftChild.NodeKey);
-        assertEquals(7, balancedBST.Root.LeftChild.RightChild.RightChild.NodeKey);
-        assertEquals(9, balancedBST.Root.RightChild.LeftChild.LeftChild.NodeKey);
-        assertEquals(11, balancedBST.Root.RightChild.LeftChild.RightChild.NodeKey);
-        assertEquals(13, balancedBST.Root.RightChild.RightChild.LeftChild.NodeKey);
-        assertEquals(15, balancedBST.Root.RightChild.RightChild.RightChild.NodeKey);
+        assertEquals(0, balancedBST.Root.Level);
 
+        assertEquals(4, balancedBST.Root.LeftChild.NodeKey);
+        assertEquals(1, balancedBST.Root.LeftChild.Level);
+        assertEquals(12, balancedBST.Root.RightChild.NodeKey);
+        assertEquals(1, balancedBST.Root.RightChild.Level);
+
+        assertEquals(2, balancedBST.Root.LeftChild.LeftChild.NodeKey);
+        assertEquals(2, balancedBST.Root.LeftChild.LeftChild.Level);
+        assertEquals(6, balancedBST.Root.LeftChild.RightChild.NodeKey);
+        assertEquals(2, balancedBST.Root.LeftChild.RightChild.Level);
+        assertEquals(10, balancedBST.Root.RightChild.LeftChild.NodeKey);
+        assertEquals(2, balancedBST.Root.RightChild.LeftChild.Level);
+        assertEquals(14, balancedBST.Root.RightChild.RightChild.NodeKey);
+        assertEquals(2, balancedBST.Root.RightChild.RightChild.Level);
+        assertEquals(1, balancedBST.Root.LeftChild.LeftChild.LeftChild.NodeKey);
+        assertEquals(3, balancedBST.Root.LeftChild.LeftChild.LeftChild.Level);
+        assertEquals(3, balancedBST.Root.LeftChild.LeftChild.RightChild.NodeKey);
+        assertEquals(3, balancedBST.Root.LeftChild.LeftChild.RightChild.Level);
+        assertEquals(5, balancedBST.Root.LeftChild.RightChild.LeftChild.NodeKey);
+        assertEquals(3, balancedBST.Root.LeftChild.RightChild.RightChild.Level);
+        assertEquals(7, balancedBST.Root.LeftChild.RightChild.RightChild.NodeKey);
+        assertEquals(3, balancedBST.Root.LeftChild.RightChild.RightChild.Level);
+        assertEquals(9, balancedBST.Root.RightChild.LeftChild.LeftChild.NodeKey);
+        assertEquals(3, balancedBST.Root.RightChild.LeftChild.LeftChild.Level);
+        assertEquals(11, balancedBST.Root.RightChild.LeftChild.RightChild.NodeKey);
+        assertEquals(3, balancedBST.Root.RightChild.LeftChild.RightChild.Level);
+        assertEquals(13, balancedBST.Root.RightChild.RightChild.LeftChild.NodeKey);
+        assertEquals(3, balancedBST.Root.RightChild.RightChild.LeftChild.Level);
+        assertEquals(15, balancedBST.Root.RightChild.RightChild.RightChild.NodeKey);
+        assertEquals(3, balancedBST.Root.RightChild.RightChild.RightChild.Level);
     }
 
     @Test
