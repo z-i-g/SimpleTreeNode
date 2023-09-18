@@ -33,9 +33,11 @@ class Heap
 
     public boolean Add(int key)
     {
-        if (HeapArray == null || HeapArray[HeapArray.length - 1] != 0)
+        if (HeapArray == null)
             return false;
         int firstEmptyIndex = findFirstEmptyIndex();
+        if (firstEmptyIndex == -1)
+            return false;
         HeapArray[firstEmptyIndex] = key;
         moveElementToTop(firstEmptyIndex);
 
