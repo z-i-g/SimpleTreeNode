@@ -21,7 +21,7 @@ class Heap
 
     public int GetMax()
     {
-        if (HeapArray == null || HeapArray[0] == 0)
+        if (HeapArray == null)
             return -1;
         int lastFilledIndex = findLastFilledIndex();
         HeapArray[0] = HeapArray[lastFilledIndex];
@@ -44,6 +44,8 @@ class Heap
     }
 
     private int findFirstEmptyIndex() {
+        if (HeapArray[0] == 0)
+            return 1;
         for (int i = 0; i < HeapArray.length; i++) {
             if (HeapArray[i] == 0)
                 return i;
@@ -56,7 +58,7 @@ class Heap
             if (HeapArray[i] != 0)
                 return i;
         }
-        return -1;
+        return 0;
     }
 
     private void moveElementToTop(int currentIndex) {
