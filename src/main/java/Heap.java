@@ -77,10 +77,17 @@ class Heap
     }
 
     private void moveElementToDown(int currentIndex) {
-        if (HeapArray.length == 1)
-            return;
         int leftElementIndex = 2 * currentIndex + 1;
         int rightElementIndex = 2 * currentIndex + 2;
+
+        if (leftElementIndex > HeapArray.length - 1 && rightElementIndex > HeapArray.length - 1)
+            return;
+
+        if (leftElementIndex > HeapArray.length - 1 && HeapArray[currentIndex] > HeapArray[rightElementIndex])
+            return;
+
+        if (rightElementIndex > HeapArray.length - 1 && HeapArray[currentIndex] > HeapArray[leftElementIndex])
+            return;
 
         if (HeapArray[currentIndex] >= HeapArray[leftElementIndex] && HeapArray[currentIndex] >= HeapArray[rightElementIndex])
             return;
