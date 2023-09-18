@@ -10,7 +10,14 @@ class HeapTest {
     public void getMaxWhenHeapIsEmpty() {
         assertEquals(-1, heap.GetMax());
     }
-    
+
+    @Test
+    public void getMaxWhenHeapSizeOne() {
+        heap.MakeHeap(new int[] {1}, 0);
+        assertEquals(0, heap.GetMax());
+    }
+
+
     @Test
     public void getMaxWhenHeapIsNotEmpty() {
         int[] arr = new int[] {12, 5, 13, 6, 14, 7, 15, 8, 11, 9, 10, 4, 2, 1, 3};

@@ -44,8 +44,6 @@ class Heap
     }
 
     private int findFirstEmptyIndex() {
-        if (HeapArray[0] == 0)
-            return 1;
         for (int i = 0; i < HeapArray.length; i++) {
             if (HeapArray[i] == 0)
                 return i;
@@ -77,6 +75,8 @@ class Heap
     }
 
     private void moveElementToDown(int currentIndex) {
+        if (HeapArray.length == 1)
+            return;
         int leftElementIndex = 2 * currentIndex + 1;
         int rightElementIndex = 2 * currentIndex + 2;
 
