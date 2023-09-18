@@ -78,7 +78,7 @@ class Heap
         int leftElementIndex = 2 * currentIndex + 1;
         int rightElementIndex = 2 * currentIndex + 2;
 
-        if (HeapArray[currentIndex] > HeapArray[leftElementIndex] && HeapArray[currentIndex] > HeapArray[rightElementIndex])
+        if (HeapArray[currentIndex] >= HeapArray[leftElementIndex] && HeapArray[currentIndex] >= HeapArray[rightElementIndex])
             return;
 
         int maxNextElementIndex = HeapArray[leftElementIndex] > HeapArray[rightElementIndex] ? leftElementIndex : rightElementIndex;
