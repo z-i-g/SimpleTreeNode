@@ -14,7 +14,7 @@ class HeapTest {
     @Test
     public void getMaxWhenHeapSizeOne() {
         heap.MakeHeap(new int[] {1}, 0);
-        assertEquals(0, heap.GetMax());
+        assertEquals(-1, heap.GetMax());
     }
 
     @Test
@@ -23,6 +23,21 @@ class HeapTest {
         heap.MakeHeap(arr, 4);
 
         assertEquals(111, heap.GetMax());
+        assertEquals(95, heap.GetMax());
+        assertEquals(92, heap.GetMax());
+        assertEquals(81, heap.GetMax());
+        assertEquals(66, heap.GetMax());
+        assertEquals(50, heap.GetMax());
+        assertEquals(47, heap.GetMax());
+        assertEquals(45, heap.GetMax());
+        assertEquals(41, heap.GetMax());
+        assertEquals(28, heap.GetMax());
+        assertEquals(23, heap.GetMax());
+        assertEquals(19, heap.GetMax());
+        assertEquals(12, heap.GetMax());
+        assertEquals(4, heap.GetMax());
+        assertEquals(-1, heap.GetMax());
+        assertEquals(-1, heap.GetMax());
     }
 
     @Test
