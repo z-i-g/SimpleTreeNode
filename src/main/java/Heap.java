@@ -24,11 +24,11 @@ class Heap
         if (HeapArray == null)
             return -1;
         int lastFilledIndex = findLastFilledIndex();
-        if (lastFilledIndex == 0)
-            return -1;
         HeapArray[0] = HeapArray[lastFilledIndex];
         HeapArray[lastFilledIndex] = 0;
         moveElementToDown(0);
+        if (lastFilledIndex == 0)
+            return -1;
         // вернуть значение корня и перестроить кучу
         return HeapArray[0]; // если куча пуста
     }
