@@ -14,7 +14,10 @@ class HeapTest {
     @Test
     public void getMaxWhenHeapSizeOne() {
         heap.MakeHeap(new int[] {1}, 0);
+        assertEquals(1, heap.GetMax());
+        assertEquals(0, heap.HeapArray[0]);
         assertEquals(-1, heap.GetMax());
+        assertEquals(0, heap.HeapArray[0]);
     }
 
     @Test
@@ -22,22 +25,54 @@ class HeapTest {
         int[] arr = new int[] {12, 45, 23, 66, 4, 47, 50, 81, 111, 95, 120, 41, 28, 19, 92};
         heap.MakeHeap(arr, 4);
 
+        assertEquals(120, heap.GetMax());
+        assertEquals(111, heap.HeapArray[0]);
+
         assertEquals(111, heap.GetMax());
+        assertEquals(95, heap.HeapArray[0]);
+
         assertEquals(95, heap.GetMax());
+        assertEquals(92, heap.HeapArray[0]);
+
         assertEquals(92, heap.GetMax());
+        assertEquals(81, heap.HeapArray[0]);
+
         assertEquals(81, heap.GetMax());
+        assertEquals(66, heap.HeapArray[0]);
+
         assertEquals(66, heap.GetMax());
+        assertEquals(50, heap.HeapArray[0]);
+
         assertEquals(50, heap.GetMax());
+        assertEquals(47, heap.HeapArray[0]);
+
         assertEquals(47, heap.GetMax());
+        assertEquals(45, heap.HeapArray[0]);
+
         assertEquals(45, heap.GetMax());
+        assertEquals(41, heap.HeapArray[0]);
+
         assertEquals(41, heap.GetMax());
+        assertEquals(28, heap.HeapArray[0]);
+
         assertEquals(28, heap.GetMax());
+        assertEquals(23, heap.HeapArray[0]);
+
         assertEquals(23, heap.GetMax());
+        assertEquals(19, heap.HeapArray[0]);
+
         assertEquals(19, heap.GetMax());
+        assertEquals(12, heap.HeapArray[0]);
+
         assertEquals(12, heap.GetMax());
+        assertEquals(4, heap.HeapArray[0]);
+
         assertEquals(4, heap.GetMax());
+        assertEquals(0, heap.HeapArray[0]);
+
         assertEquals(-1, heap.GetMax());
         assertEquals(0, heap.HeapArray[0]);
+
         assertEquals(-1, heap.GetMax());
         assertEquals(0, heap.HeapArray[0]);
     }
@@ -46,7 +81,7 @@ class HeapTest {
     public void getMaxTestThree() {
         int[] arr = new int[] {110, 90, 40, 70, 80, 30, 10, 20, 50, 60, 65, 31, 29, 11, 9};
         heap.MakeHeap(arr, 3);
-        assertEquals(90, heap.GetMax());
+        assertEquals(110, heap.GetMax());
 
         assertEquals(90, heap.HeapArray[0]);
         assertEquals(80, heap.HeapArray[1]);
