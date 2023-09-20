@@ -27,7 +27,6 @@ class HeapTest {
 
         assertEquals(120, heap.GetMax());
         assertEquals(111, heap.HeapArray[0]);
-
         assertEquals(111, heap.GetMax());
         assertEquals(95, heap.HeapArray[0]);
 
