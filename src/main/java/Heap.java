@@ -21,15 +21,16 @@ class Heap
 
     public int GetMax()
     {
-        int currentMaxElement = -1;
-        if (HeapArray == null || HeapArray[0] == 0)
-            return currentMaxElement;
+        if (HeapArray == null)
+            return -1;
         int lastFilledIndex = findLastFilledIndex();
-        currentMaxElement = HeapArray[0];
         HeapArray[0] = HeapArray[lastFilledIndex];
         HeapArray[lastFilledIndex] = 0;
+        if (lastFilledIndex == 0)
+            return -1;
         moveElementToDown(0);
-        return currentMaxElement;
+        // вернуть значение корня и перестроить кучу
+        return HeapArray[0]; // если куча пуста
     }
 
     public boolean Add(int key)
