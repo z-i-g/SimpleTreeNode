@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -216,4 +219,70 @@ class SimpleTreeTest {
         assertEquals(3, childNodeThird.level);
         assertEquals(4, childNodeFourth.level);
     }
+
+    @Test
+    public void evenTreesTestWhenTreeEmpty() {
+        ArrayList<Integer> actualResult = simpleTree.EvenTrees();
+
+        assertEquals(Collections.EMPTY_LIST, actualResult);
+    }
+
+    @Test
+    public void evenTreesFirstTest() {
+        SimpleTreeNode<Integer> rootNode = new SimpleTreeNode<>(1, null);
+        SimpleTreeNode<Integer> node2 = new SimpleTreeNode<>(2, rootNode);
+        SimpleTreeNode<Integer> node3 = new SimpleTreeNode<>(3, rootNode);
+        SimpleTreeNode<Integer> node4 = new SimpleTreeNode<>(4, node3);
+        SimpleTreeNode<Integer> node5 = new SimpleTreeNode<>(5, node2);
+        SimpleTreeNode<Integer> node6 = new SimpleTreeNode<>(6, rootNode);
+        SimpleTreeNode<Integer> node7 = new SimpleTreeNode<>(7, node2);
+        SimpleTreeNode<Integer> node8 = new SimpleTreeNode<>(8, node6);
+        SimpleTreeNode<Integer> node9 = new SimpleTreeNode<>(9, node8);
+        SimpleTreeNode<Integer> node10 = new SimpleTreeNode<>(10, node8);
+        SimpleTree<Integer> simpleTree = new SimpleTree<>(rootNode);
+
+        simpleTree.AddChild(rootNode, node2);
+        simpleTree.AddChild(rootNode, node3);
+        simpleTree.AddChild(node3, node4);
+        simpleTree.AddChild(node2, node5);
+        simpleTree.AddChild(rootNode, node6);
+        simpleTree.AddChild(node2, node7);
+        simpleTree.AddChild(node6, node8);
+        simpleTree.AddChild(node8, node9);
+        simpleTree.AddChild(node8, node10);
+
+        ArrayList<Integer> actualResult = simpleTree.EvenTrees();
+
+        assertEquals(Arrays.asList(1, 3, 1, 6), actualResult);
+    }
+
+    @Test
+    public void evenTreesSecondTest() {
+        SimpleTreeNode<Integer> rootNode = new SimpleTreeNode<>(1, null);
+        SimpleTreeNode<Integer> node2 = new SimpleTreeNode<>(2, rootNode);
+        SimpleTreeNode<Integer> node3 = new SimpleTreeNode<>(3, node2);
+        SimpleTreeNode<Integer> node4 = new SimpleTreeNode<>(4, node3);
+        SimpleTreeNode<Integer> node5 = new SimpleTreeNode<>(5, node4);
+        SimpleTreeNode<Integer> node6 = new SimpleTreeNode<>(6, node5);
+        SimpleTreeNode<Integer> node7 = new SimpleTreeNode<>(7, node6);
+        SimpleTreeNode<Integer> node8 = new SimpleTreeNode<>(8, node7);
+        SimpleTreeNode<Integer> node9 = new SimpleTreeNode<>(9, node8);
+        SimpleTreeNode<Integer> node10 = new SimpleTreeNode<>(10, node9);
+        SimpleTree<Integer> simpleTree = new SimpleTree<>(rootNode);
+
+        simpleTree.AddChild(rootNode, node2);
+        simpleTree.AddChild(node2, node3);
+        simpleTree.AddChild(node3, node4);
+        simpleTree.AddChild(node4, node5);
+        simpleTree.AddChild(node5, node6);
+        simpleTree.AddChild(node6, node7);
+        simpleTree.AddChild(node7, node8);
+        simpleTree.AddChild(node8, node9);
+        simpleTree.AddChild(node9, node10);
+
+        ArrayList<Integer> actualResult = simpleTree.EvenTrees();
+
+        assertEquals(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9), actualResult);
+    }
+
 }

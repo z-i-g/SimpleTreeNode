@@ -94,6 +94,30 @@ class SimpleTree<T>
         setNodesLevel(Root, 1);
     }
 
+    public ArrayList<T> EvenTrees()
+    {
+        List<SimpleTreeNode<T>> allNodes = GetAllNodes();
+        return evenTreesRecursively(allNodes);
+    }
+
+    private ArrayList<T> evenTreesRecursively(List<SimpleTreeNode<T>> allNodes)
+    {
+        ArrayList<T> brokenTies = new ArrayList<>();
+        if (allNodes.isEmpty())
+            return brokenTies;
+
+        SimpleTreeNode<T> currentRoot = allNodes.remove(0);
+        SimpleTree<T> currentSubTree = new SimpleTree<>(currentRoot);
+
+        if (currentSubTree.Count() % 2 == 0 && currentRoot.Parent != null) {
+            brokenTies.add(currentRoot.Parent.NodeValue);
+            brokenTies.add(currentRoot.NodeValue);
+        }
+
+        brokenTies.addAll(evenTreesRecursively(allNodes));
+        return brokenTies;
+    }
+
     private void setNodesLevel(SimpleTreeNode<T> currentNode, int levelNum) {
         currentNode.level = levelNum;
 
