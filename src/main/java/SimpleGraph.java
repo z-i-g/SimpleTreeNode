@@ -15,6 +15,9 @@ class SimpleGraph
     int [][] m_adjacency;
     int max_vertex;
     Stack<Integer> depthFirstSearchStack = new Stack<>();
+    Queue<Integer> breadthFirstSearchQueue = new PriorityQueue<>();
+
+    List<Integer> breadthFirstSearchRoute = new ArrayList<>();
 
     public SimpleGraph(int size)
     {
@@ -120,5 +123,57 @@ class SimpleGraph
             return depthFirstSearchRecursively(depthFirstSearchStack.pop(), VTo);
 
         return depthFirstSearchStack;
+    }
+
+    public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
+    {
+        ArrayList<Vertex> routeVertexes = new ArrayList<>();
+
+        if (VFrom > vertex.length || VTo > vertex.length)
+            return routeVertexes;
+
+        breadthFirstSearchQueue.clear();
+        for (Vertex v : vertex) {
+            v.Hit = false;
+        }
+        breadthFirstSearchRoute.add(VFrom);
+        List<Integer> routeVertexesIndexes = breadthFirstSearchRecursively(VFrom, VTo);
+        // Узлы задаются позициями в списке vertex.
+        // Возвращается список узлов -- путь из VFrom в VTo.
+        // Список пустой, если пути нету.
+        return routeVertexes;
+    }
+
+    private List<Integer> breadthFirstSearchRecursively(int VFrom, int VTo)
+    {
+        Vertex currentVertex = vertex[VFrom];
+        currentVertex.Hit = true;
+//        breadthFirstSearchRoute.add(VFrom);
+
+
+        for (int i = 0; i < vertex.length; i++) {
+            if (m_adjacency[VFrom][i] == 1 && !vertex[i].Hit && i == VTo) {
+                breadthFirstSearchRoute.add(i);
+                return breadthFirstSearchRoute;
+            }
+            if (m_adjacency[VFrom][i] == 1 && !vertex[i].Hit) {
+                vertex[i].Hit = true;
+                breadthFirstSearchQueue.add(i);
+            }
+
+        }
+
+        if (!breadthFirstSearchQueue.isEmpty()) {
+            if (breadthFirstSearchQueue.size() == 1) {
+                breadthFirstSearchRoute.add(breadthFirstSearchQueue.peek());
+            }
+            int i = breadthFirstSearchQueue.remove();
+            return breadthFirstSearchRecursively(i, VTo);
+        }
+
+        return breadthFirstSearchRoute;
+        // Узлы задаются позициями в списке vertex.
+        // Возвращается список узлов -- путь из VFrom в VTo.
+        // Список пустой, если пути нету.
     }
 }
