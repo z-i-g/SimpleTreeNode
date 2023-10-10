@@ -1,4 +1,3 @@
-import java.util.*;
 
 class Vertex
 {
@@ -130,14 +129,14 @@ class SimpleGraph
     {
         ArrayList<Vertex> routeVertexes = new ArrayList<>();
 
-        if (VFrom > vertex.length || VTo > vertex.length)
+        if (VFrom >= vertex.length || VTo >= vertex.length)
             return routeVertexes;
 
         breadthFirstSearchQueue.clear();
+        breadthFirstSearchRoute.clear();
         for (Vertex v : vertex) {
             v.Hit = false;
         }
-        breadthFirstSearchRoute.add(VFrom);
         Set<Integer> routeVertexesIndexes = breadthFirstSearchRecursively(VFrom, VTo);
         for (Integer routeVertexesIndex : routeVertexesIndexes) {
             routeVertexes.add(vertex[routeVertexesIndex]);
