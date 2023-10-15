@@ -147,6 +147,53 @@ class SimpleGraph
         return routeVertexes;
     }
 
+    public ArrayList<Vertex> WeakVertices()
+    {
+        ArrayList<Vertex> withoutTriangleVertex = new ArrayList<>();
+
+        if (vertex.length == 0)
+            return  withoutTriangleVertex;
+
+        ArrayList<Integer> withoutTriangleVertexIndexes = weakVerticesRecursively(0);
+        for (Integer withoutTriangleVertexIndex : withoutTriangleVertexIndexes) {
+            withoutTriangleVertex.add(vertex[withoutTriangleVertexIndex]);
+        }
+
+        return withoutTriangleVertex;
+
+        // возвращает список узлов вне треугольников
+    }
+
+    public ArrayList<Integer> weakVerticesRecursively(int currentIndex)
+    {
+        ArrayList<Integer> indexes = new ArrayList<>();
+        if (currentIndex >= vertex.length)
+            return indexes;
+
+        vertex[currentIndex].Hit = true;
+        indexes.add(currentIndex);
+
+        for (int i = 0; i < vertex.length; i++) {
+            if (m_adjacency[currentIndex][i] == 1 && !vertex[i].Hit) {
+                indexes.add(i);
+            }
+        }
+
+        if (indexes.size() == 1)
+            return indexes;
+
+        if (indexes.size() < 3) {
+            indexes.clear();
+            indexes.add(currentIndex);
+            currentIndex++;
+            indexes.addAll(weakVerticesRecursively(currentIndex));
+        }
+
+        return indexes;
+
+        // возвращает список узлов вне треугольников
+    }
+
     private Set<Integer> breadthFirstSearchRecursively(int VFrom, int VTo)
     {
         Vertex currentVertex = vertex[VFrom];

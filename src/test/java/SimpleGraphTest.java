@@ -323,8 +323,6 @@ class SimpleGraphTest {
         assertEquals(Arrays.asList(0, 2, 1, 6, 10), actualResult);
     }
 
-
-
     @Test
     public void breadFirstSearchTestWhenThereIsWayThree() {
         SimpleGraph simpleGraph = new SimpleGraph(11);
@@ -358,5 +356,37 @@ class SimpleGraphTest {
                 .collect(Collectors.toList());
 
         assertEquals(Arrays.asList(0, 2, 1, 4), actualResult);
+    }
+
+    @Test
+    public void weakVerticesTestWhenThereIsWayThree() {
+        SimpleGraph simpleGraph = new SimpleGraph(11);
+        simpleGraph.AddVertex(0);
+        simpleGraph.AddVertex(1);
+        simpleGraph.AddVertex(2);
+        simpleGraph.AddVertex(3);
+        simpleGraph.AddVertex(4);
+        simpleGraph.AddVertex(5);
+        simpleGraph.AddVertex(6);
+        simpleGraph.AddVertex(7);
+        simpleGraph.AddVertex(8);
+        simpleGraph.AddEdge(0, 1);
+        simpleGraph.AddEdge(0, 2);
+        simpleGraph.AddEdge(0, 3);
+        simpleGraph.AddEdge(2, 3);
+        simpleGraph.AddEdge(2, 5);
+        simpleGraph.AddEdge(1, 6);
+        simpleGraph.AddEdge(3, 6);
+        simpleGraph.AddEdge(6, 4);
+        simpleGraph.AddEdge(6, 7);
+        simpleGraph.AddEdge(4, 7);
+        simpleGraph.AddEdge(7, 8);
+
+
+        List<Integer> actualResult = simpleGraph.WeakVertices().stream()
+                .map(vertex -> vertex.Value)
+                .collect(Collectors.toList());
+
+        assertEquals(Arrays.asList(1, 8), actualResult);
     }
 }
