@@ -359,8 +359,8 @@ class SimpleGraphTest {
     }
 
     @Test
-    public void weakVerticesTestWhenThereIsWayThree() {
-        SimpleGraph simpleGraph = new SimpleGraph(11);
+    public void weakVerticesTestWhenContainsWithOutTriangleVertex() {
+        SimpleGraph simpleGraph = new SimpleGraph(9);
         simpleGraph.AddVertex(0);
         simpleGraph.AddVertex(1);
         simpleGraph.AddVertex(2);
@@ -376,17 +376,91 @@ class SimpleGraphTest {
         simpleGraph.AddEdge(2, 3);
         simpleGraph.AddEdge(2, 5);
         simpleGraph.AddEdge(1, 6);
+        simpleGraph.AddEdge(3, 5);
         simpleGraph.AddEdge(3, 6);
         simpleGraph.AddEdge(6, 4);
         simpleGraph.AddEdge(6, 7);
         simpleGraph.AddEdge(4, 7);
         simpleGraph.AddEdge(7, 8);
 
-
         List<Integer> actualResult = simpleGraph.WeakVertices().stream()
                 .map(vertex -> vertex.Value)
                 .collect(Collectors.toList());
 
         assertEquals(Arrays.asList(1, 8), actualResult);
+    }
+
+    @Test
+    public void weakVerticesTestWhenNotContainsWithOutTriangleVertex() {
+        SimpleGraph simpleGraph = new SimpleGraph(9);
+        simpleGraph.AddVertex(0);
+        simpleGraph.AddVertex(1);
+        simpleGraph.AddVertex(2);
+        simpleGraph.AddVertex(3);
+        simpleGraph.AddVertex(4);
+        simpleGraph.AddVertex(5);
+        simpleGraph.AddVertex(6);
+        simpleGraph.AddVertex(7);
+        simpleGraph.AddVertex(8);
+        simpleGraph.AddEdge(0, 1);
+        simpleGraph.AddEdge(0, 2);
+        simpleGraph.AddEdge(0, 3);
+        simpleGraph.AddEdge(2, 3);
+        simpleGraph.AddEdge(2, 5);
+        simpleGraph.AddEdge(1, 6);
+        simpleGraph.AddEdge(3, 1);
+        simpleGraph.AddEdge(3, 5);
+        simpleGraph.AddEdge(3, 6);
+        simpleGraph.AddEdge(6, 4);
+        simpleGraph.AddEdge(6, 7);
+        simpleGraph.AddEdge(6, 8);
+        simpleGraph.AddEdge(4, 7);
+        simpleGraph.AddEdge(7, 8);
+
+        List<Integer> actualResult = simpleGraph.WeakVertices().stream()
+                .map(vertex -> vertex.Value)
+                .collect(Collectors.toList());
+
+        assertEquals(Collections.emptyList(), actualResult);
+    }
+
+    @Test
+    public void weakVerticesTestWhenAllVertexContainsWithOutTriangle() {
+        SimpleGraph simpleGraph = new SimpleGraph(9);
+        simpleGraph.AddVertex(0);
+        simpleGraph.AddVertex(1);
+        simpleGraph.AddVertex(2);
+        simpleGraph.AddVertex(3);
+        simpleGraph.AddVertex(4);
+        simpleGraph.AddVertex(5);
+        simpleGraph.AddVertex(6);
+        simpleGraph.AddVertex(7);
+        simpleGraph.AddVertex(8);
+        simpleGraph.AddEdge(0, 1);
+        simpleGraph.AddEdge(0, 3);
+        simpleGraph.AddEdge(2, 3);
+        simpleGraph.AddEdge(1, 6);
+        simpleGraph.AddEdge(3, 5);
+        simpleGraph.AddEdge(3, 6);
+        simpleGraph.AddEdge(6, 7);
+        simpleGraph.AddEdge(4, 7);
+        simpleGraph.AddEdge(7, 8);
+
+        List<Integer> actualResult = simpleGraph.WeakVertices().stream()
+                .map(vertex -> vertex.Value)
+                .collect(Collectors.toList());
+
+        assertEquals(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8), actualResult);
+    }
+
+    @Test
+    public void weakVerticesTestWhenEmptyGraph() {
+        SimpleGraph simpleGraph = new SimpleGraph(0);
+
+        List<Integer> actualResult = simpleGraph.WeakVertices().stream()
+                .map(vertex -> vertex.Value)
+                .collect(Collectors.toList());
+
+        assertEquals(Collections.emptyList(), actualResult);
     }
 }

@@ -18,6 +18,7 @@ class SimpleGraph
     Stack<Integer> depthFirstSearchStack = new Stack<>();
     Queue<Integer> breadthFirstSearchQueue = new PriorityQueue<>();
     Set<Integer> breadthFirstSearchRoute = new LinkedHashSet<>();
+    Set<Integer> withTriangleVertexIndexes = new LinkedHashSet<>();
 
     public SimpleGraph(int size)
     {
@@ -149,49 +150,55 @@ class SimpleGraph
 
     public ArrayList<Vertex> WeakVertices()
     {
-        ArrayList<Vertex> withoutTriangleVertex = new ArrayList<>();
+        ArrayList<Vertex> allVertex = new ArrayList<>(Arrays.asList(vertex));
+        ArrayList<Vertex> withTriangleVertex = new ArrayList<>();
+        withTriangleVertexIndexes.clear();
 
         if (vertex.length == 0)
-            return  withoutTriangleVertex;
+            return  withTriangleVertex;
 
-        ArrayList<Integer> withoutTriangleVertexIndexes = weakVerticesRecursively(0);
-        for (Integer withoutTriangleVertexIndex : withoutTriangleVertexIndexes) {
-            withoutTriangleVertex.add(vertex[withoutTriangleVertexIndex]);
+        weakVerticesRecursively(0);
+        for (Integer withTriangleVertexIndex : withTriangleVertexIndexes) {
+            withTriangleVertex.add(vertex[withTriangleVertexIndex]);
         }
 
-        return withoutTriangleVertex;
-
+        allVertex.removeAll(withTriangleVertex);
+        return allVertex;
         // возвращает список узлов вне треугольников
     }
 
-    public ArrayList<Integer> weakVerticesRecursively(int currentIndex)
+    private void weakVerticesRecursively(int currentIndex)
     {
-        ArrayList<Integer> indexes = new ArrayList<>();
+        ArrayList<Integer> adjacentIndexes = new ArrayList<>();
         if (currentIndex >= vertex.length)
-            return indexes;
+            return;
 
-        vertex[currentIndex].Hit = true;
-        indexes.add(currentIndex);
+        if (withTriangleVertexIndexes.contains(currentIndex)) {
+            currentIndex++;
+            weakVerticesRecursively(currentIndex);
+            return;
+        }
 
         for (int i = 0; i < vertex.length; i++) {
-            if (m_adjacency[currentIndex][i] == 1 && !vertex[i].Hit) {
-                indexes.add(i);
+            if (m_adjacency[currentIndex][i] == 1)
+                adjacentIndexes.add(i);
+        }
+
+        for (int checkingIndex : adjacentIndexes) {
+            checkAndAddToWithOutTriangle(currentIndex, checkingIndex, adjacentIndexes);
+        }
+
+        currentIndex++;
+        weakVerticesRecursively(currentIndex);
+    }
+
+    private void checkAndAddToWithOutTriangle(int currentIndex, int checkingIndex, ArrayList<Integer> processingIndexes) {
+        for (int index : processingIndexes) {
+            if (IsEdge(checkingIndex, index)) {
+                withTriangleVertexIndexes.add(index);
+                withTriangleVertexIndexes.add(currentIndex);
             }
         }
-
-        if (indexes.size() == 1)
-            return indexes;
-
-        if (indexes.size() < 3) {
-            indexes.clear();
-            indexes.add(currentIndex);
-            currentIndex++;
-            indexes.addAll(weakVerticesRecursively(currentIndex));
-        }
-
-        return indexes;
-
-        // возвращает список узлов вне треугольников
     }
 
     private Set<Integer> breadthFirstSearchRecursively(int VFrom, int VTo)
